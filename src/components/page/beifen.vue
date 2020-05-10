@@ -1,24 +1,25 @@
 <template>
-  <div id="china_map" style="width:100%;height:90%;">
-    <!-- <Button @click="mapInit()">地图</Button> -->
+  <div id="hello" style="width:100%;height:100%;"  ref="myEchart">
+
   </div>
 </template>
 
 <script>
-import echarts from "echarts";
-import "echarts/map/js/china.js";
-export default {
-  name:'distriMap',
-  data() {
-    return {
-      chinachart: null,
-      days: [],
-      province:[],
-      e_data: [],
-      news:[]
-    };
-  },
-  created(){
+  import echarts from "echarts";
+  import "echarts/map/js/china.js";
+
+  export default {
+    name: 'HelloWorld',
+    data() {
+      return {
+        chart: null,
+        e_data: [],
+        days: [],
+        province: [],
+        news: []
+      }
+    },
+    created() {
       this.e_data = [
         [270, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [375, 26, 5, 1, 1, 0, 5, 1, 2, 2, 0, 10, 0, 6, 0, 0, 0, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -147,297 +148,272 @@ export default {
         "3月7", "3月8", "3月9", "3月10", "3月11", "3月12", "3月13", "3月14", "3月15", "3月16", "3月17", "3月18", "3月19",
         "3月20", "3月21", "3月22", "3月23", "3月24", "3月25", "3月26", "3月27", "3月28", "3月29", "3月30", "3月31", "4月1", "4月2",
       ];
-  },
-  mounted(){
-    this.mapInit()
-  },
-  methods: {
-    mapInit() {
-      var that = this;
-      // 初始化echarts实例
-      this.chinachart = echarts.init(document.getElementById("china_map"));
-      // 进行相关配置
+    },
+    mounted() {
+      // this.initChart();
+      this.Ecahr();
+    },
+    methods: {
+      Ecahr() {
+        var myChart = echarts.init(document.getElementById('hello'));
+        var option = {
+          baseOption: {
+            timeline: {
+              axisType: 'category',
+              // realtime: false,
+              // loop: false,
+              autoPlay: true,
+              playInterval: 2000,
+              symbolSize: 12,
+              left: '5%',
+              right: '5%',
+              bottom: '0%',
+              width: '90%',
+              // controlStyle: {
+              //     position: 'left'
+              // },
+              data: this.days,
+              tooltip: {
+                formatter: this.days
+              },
+            },
 
-      var chartOption = {
-        baseOption: {
-          timeline: {
-            axisType: "category",
-            // realtime: false,
-            // loop: false,
-            autoPlay: true,
-            playInterval: 2000,
-            symbolSize: 12,
-            left: "5%",
-            right: "5%",
-            bottom: "0%",
-            width: "90%",
-            // controlStyle: {
-            //     position: 'left'
-            // },
-            data: that.days,
             tooltip: {
-              formatter: that.days
-            }
-          },
-          tooltip: {
-            show: true,
-            formatter: function(params) {
-              return params.name + "：" + params.data["value"];
-            }
-          },
-          // visualMap的详细配置解析：https://echarts.baidu.com/option.html#visualMap
-          visualMap: {
-            type: "piecewise",
-            pieces: [
-              {
+              show: true,
+              formatter: function(params) {
+                return params.name + '：' + params.data['value']
+              },
+            },
+            visualMap: {
+              type: 'piecewise',
+              pieces: [{
                 min: 1002,
-                color: "#73240D"
+                color: '#73240D'
               },
-              {
-                min: 501,
-                max: 1001,
-                color: "#BB0000"
+                {
+                  min: 501,
+                  max: 1001,
+                  color: '#BB0000'
+                },
+                {
+                  min: 251,
+                  max: 500,
+                  color: '#BD430A'
+                },
+                {
+                  min: 101,
+                  max: 250,
+                  color: '#E08150'
+                },
+                {
+                  min: 11,
+                  max: 100,
+                  color: '#E9B090'
+                },
+                {
+                  min: 1,
+                  max: 10,
+                  color: '#F2DDD2'
+                },
+                {
+                  value: 0,
+                  color: 'white'
+                }
+              ],
+              orient: 'vertical',
+              itemWidth: 25,
+              itemHeight: 15,
+              showLabel: true,
+              seriesIndex: [0],
+
+              textStyle: {
+                color: '#7B93A7'
               },
-              {
-                min: 251,
-                max: 500,
-                color: "#BD430A"
+              bottom: '10%',
+              left: "5%",
+            },
+            grid: {
+              right: '5%',
+              top: '20%',
+              bottom: '10%',
+              width: '20%'
+            },
+            xAxis: {
+              min: 0,
+              max: 4000,
+              show: false
+            },
+            yAxis: [{
+              inverse: true,
+              offset: '2',
+              'type': 'category',
+              data: '',
+              nameTextStyle: {
+                color: '#fff'
               },
-              {
-                min: 101,
-                max: 250,
-                color: "#E08150"
+              axisTick: {
+                show: false,
               },
-              {
-                min: 11,
-                max: 100,
-                color: "#E9B090"
+              axisLabel: {
+                //rotate:45,
+                textStyle: {
+                  fontSize: 14,
+                  color: '#000000',
+                },
+                interval: 0
               },
-              {
-                min: 1,
-                max: 10,
-                color: "#F2DDD2"
+              axisLine: {
+                show: false,
+                lineStyle: {
+                  color: '#333'
+                },
               },
+              splitLine: {
+                show: false,
+                lineStyle: {
+                  color: '#333'
+                }
+              },
+            }],
+            geo: {
+              map: 'china',
+              right: '35%',
+              left: '5%',
+              label: {
+                emphasis: {
+                  show: false,
+                }
+              },
+              itemStyle: {
+                emphasis: {
+                  areaColor: '#00FF00'
+                }
+              }
+            },
+            series: [{
+              name: 'mapSer',
+              type: 'map',
+              map: 'china',
+              roam: false,
+              geoIndex: 0,
+              label: {
+                show: false,
+              },
+            },
               {
-                value: 0,
-                color: "white"
+                'name': '',
+                'type': 'bar',
+                zlevel: 2,
+                barWidth: '40%',
+                label: {
+                  normal: {
+                    show: true,
+                    fontSize: 14,
+                    position: 'right',
+                    formatter: '{c}'
+                  }
+                },
               }
             ],
-            orient: "vertical",
-            itemWidth: 25,
-            itemHeight: 15,
-            showLabel: true,
-            seriesIndex: [0],
 
-            textStyle: {
-              color: "#7B93A7"
-            },
-            bottom: "10%",
-            left: "5%"
-          }, 
-          grid: {
-          right: "5%",
-          top: "20%",
-          bottom: "10%",
-          width: "20%"
-        },
-        xAxis: {
-          min: 0,
-          max: 4000,
-          show: false
-        },
-        yAxis: [
-          {
-            inverse: true,
-            offset: "2",
-            type: "category",
-            data: "",
-            nameTextStyle: {
-              color: "#fff"
-            },
-            axisTick: {
-              show: false
-            },
-            axisLabel: {
-              //rotate:45,
-              textStyle: {
-                fontSize: 14,
-                color: "#000000"
-              },
-              interval: 0
-            },
-            axisLine: {
-              show: false,
-              lineStyle: {
-                color: "#333"
-              }
-            },
-            splitLine: {
-              show: false,
-              lineStyle: {
-                color: "#333"
-              }
-            }
-          }
-        ],
+          },
+          animationDurationUpdate: 3000,
+          animationEasingUpdate: 'quinticInOut',
+          options: []
+        };
+        for (var n = 0; n < this.days.length; n++) {
 
-          // geo配置详解： https://echarts.baidu.com/option.html#geo
-          geo: {
-            map: "china",
-            right: "35%",
-            left: "5%",
-            label: {
-              emphasis: {
-                show: false
-              }
-            },
-            itemStyle: {
-              emphasis: {
-                areaColor: "#00FF00"
-              }
-            }
-          },
-        series: [
-          {
-            name: "mapSer",
-            type: "map",
-            map: "china",
-            roam: false,
-            geoIndex: 0,
-            label: {
-              show: false
-            }
-          },
-          {
-            name: "",
-            type: "bar",
-            zlevel: 2,
-            barWidth: "40%",
-            label: {
-              normal: {
-                show: true,
-                fontSize: 14,
-                position: "right",
-                formatter: "{c}"
-              }
-            }
+          var res = [];
+          for (let j = 0; j < this.e_data[n].length; j++) {
+            res.push({
+              name: this.province[j],
+              value: this.e_data[n][j]
+            });
           }
-        ],},
-        animationDurationUpdate: 3000,
-        animationEasingUpdate: "quinticInOut",
-        options: []
-      };
-      for (var n = 0; n < this.days.length; n++) {
-        var res = [];
-        for (var j = 0; j < this.e_data[n].length; j++) {
-          res.push({
-            name: this.province[j],
-            value: this.e_data[n][j]
-          });
-        }
-        res
-          .sort(function(a, b) {
+          res.sort(function(a, b) {
             return b.value - a.value;
-          })
-          .slice(0, 6);
+          }).slice(0, 6);
 
-        res.sort(function(a, b) {
-          return a.value - b.value;
-        });
-        var res1 = [];
-        var res2 = [];
-        for (var t = 0; t < 10; t++) {
-          res1[t] = res[res.length - 1 - t].name;
-          res2[t] = res[res.length - 1 - t].value;
-        }
-        // console.log(res1);
-        // console.log("----------------");
-        // console.log(this.province);
-        // console.log("this.days",this.days)
-        chartOption.options.push({
-          title: [
-            {
+          res.sort(function(a, b) {
+            return a.value - b.value;
+          });
+          var res1 = [];
+          var res2 = [];
+          for (let t = 0; t < 10; t++) {
+            res1[t] = res[res.length - 1 - t].name;
+            res2[t] = res[res.length - 1 - t].value;
+          }
+          option.options.push({
+            title: [{
               text: this.days[n] + "日  " + this.news[n],
               textStyle: {
-                color: "#2D3E53",
+                color: '#2D3E53',
                 fontSize: 28
               },
               left: 20,
-              top: 20
+              top: 20,
             },
-            {
-              show: true,
-              text: "感染人数前十的省份",
-              textStyle: {
-                color: "#2D3E53",
-                fontSize: 18
-              },
-              right: "10%",
-              top: "15%"
-            }
-          ],
-          yAxis: {
-            data: res1
-          },
-          series: [
-            {
-              type: "map",
+              {
+                show: true,
+                text: '感染人数前十的省份',
+                textStyle: {
+                  color: '#2D3E53',
+                  fontSize: 18
+                },
+                right: '10%',
+                top: '15%'
+              }
+            ],
+            yAxis: {
+              data: res1,
+            },
+            series: [{
+              type: 'map',
               data: res
-            },
-            {
-              type: "bar",
+            }, {
+              type: 'bar',
               data: res2,
               itemStyle: {
                 normal: {
                   color: function(params) {
                     // build a color map as your need.
-                    var colorList = [
+                    var colorList = [{
+                      colorStops: [{
+                        offset: 0,
+                        color: '#FF0000' // 0% 处的颜色
+                      }, {
+                        offset: 1,
+                        color: '#990000' // 100% 处的颜色
+                      }]
+                    },
                       {
-                        colorStops: [
-                          {
-                            offset: 0,
-                            color: "#FF0000" // 0% 处的颜色
-                          },
-                          {
-                            offset: 1,
-                            color: "#990000" // 100% 处的颜色
-                          }
-                        ]
-                      },
-                      {
-                        colorStops: [
-                          {
-                            offset: 0,
-                            color: "#00C0FA" // 0% 处的颜色
-                          },
-                          {
-                            offset: 1,
-                            color: "#2F95FA" // 100% 处的颜色
-                          }
-                        ]
+                        colorStops: [{
+                          offset: 0,
+                          color: '#00C0FA' // 0% 处的颜色
+                        }, {
+                          offset: 1,
+                          color: '#2F95FA' // 100% 处的颜色
+                        }]
                       }
                     ];
                     if (params.dataIndex < 3) {
-                      return colorList[0];
+                      return colorList[0]
                     } else {
-                      return colorList[1];
+                      return colorList[1]
                     }
-                  }
+                  },
                 }
-              }
-            }
-          ]
-        });
+              },
+            }]
+          });
+        }
+        myChart.setOption(option);
       }
-      this.chinachart.setOption(chartOption);
     }
-  },
-  
-};
+  }
 </script>
 
-<style>
-  #china_map{
-    margin-top: 20px;
-  }
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+
 </style>

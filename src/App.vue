@@ -3,15 +3,21 @@
     <!-- <topNav></topNav> -->
     <router-view/>
     <router-link to="/register">注册</router-link>
+    <router-link to="/distriMap">疫情分布地图</router-link>
+    <!-- <cmap></cmap> -->
+    
   </div>
 </template>
 
 <script>
 import topNav from '@/components/common/topNav'
+import cmap from '@/components/page/distributionMap'
+import beifenmap from '@/components/page/beifen'
+
 export default {
   name: 'App',
   components:{
-    topNav
+    topNav,cmap,beifenmap
   }
 }
 </script>
