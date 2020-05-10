@@ -1,6 +1,6 @@
 # platform
 
-> A Vue.js project
+> A Vue.js project of COVID-19
 
 ## Build Setup
 
