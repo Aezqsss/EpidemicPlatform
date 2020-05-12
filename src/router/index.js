@@ -7,6 +7,8 @@ import register2 from '@/components/page/register2'
 import distriMap from '@/components/page/distributionMap'
 import chinaMap from '@/components/page/chinaMap'
 import beifenMap from '@/components/page/beifen'
+import csharp from '@/components/page/csharp'
+import grade from '@/components/page/grade'
 
 Vue.use(Router)
 
@@ -15,7 +17,7 @@ export default new Router({
     {
       path: '/',
       name: 'platform',
-      component: platform
+      component: csharp
     },{
       path: '/register',
       name: 'register',
@@ -33,6 +35,9 @@ export default new Router({
     },{
       path:'/beifen',
       component: beifenMap
+    },{
+      path:'/grade',
+      component:grade
     }
   ]
 })
